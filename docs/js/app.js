@@ -44,7 +44,7 @@ function onClick() {
     DeviceOrientationEvent.requestPermission().then(function (permissionState) {
       if (permissionState === "granted") {
         window.addEventListener("deviceorientation", function (e) {
-          document.body.style.background = "orange";
+          document.body.style.background = "green";
           element.appendChild(renderer.domElement);
 
           function render() {
@@ -53,7 +53,7 @@ function onClick() {
 
             cube.rotation.z = e.alpha - 180;
             cube.rotation.x = e.beta;
-            cube.rotation.y = -e.gamma;
+            cube.rotation.y = e.gamma;
             renderer.render(scene, camera);
           }
 
@@ -78,7 +78,7 @@ function onClick() {
     };
 
     // handle regular non iOS 13+ devices
-    document.body.style.background = "orange";
+    document.body.style.background = "green";
     element.appendChild(renderer.domElement);
     render();
   }
