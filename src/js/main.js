@@ -55,13 +55,14 @@ function onClick() {
       .then((permissionState) => {
         if (permissionState === "granted") {
           window.addEventListener("deviceorientation", (e) => {
-            document.body.style.background = "yellow"
+            document.body.style.background = "pink"
             element.appendChild(renderer.domElement)
 
             function render() {
               requestAnimationFrame(render)
 
-              cube.rotation.y += e.alpha / 200
+              // cube.rotation.y += e.alpha / 200
+              cube.rotation.y = -e.gamma
 
               renderer.render(scene, camera)
             }
@@ -83,7 +84,7 @@ function onClick() {
       .catch(console.error)
   } else {
     // handle regular non iOS 13+ devices
-    document.body.style.background = "yellow"
+    document.body.style.background = "pink"
     element.appendChild(renderer.domElement)
 
     function render() {
