@@ -8,7 +8,19 @@ function onClick() {
     DeviceOrientationEvent.requestPermission()
       .then((permissionState) => {
         if (permissionState === "granted") {
-          window.addEventListener("deviceorientation", () => {})
+          window.addEventListener("deviceorientation", (e) => {
+            const el = document.querySelector(".element")
+            el.style.transform =
+              "rotateZ(" +
+              (e.alpha - 180) +
+              "deg) " +
+              "rotateX(" +
+              e.beta +
+              "deg) " +
+              "rotateY(" +
+              -e.gamma +
+              "deg)"
+          })
         }
       })
       .catch(console.error)
