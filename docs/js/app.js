@@ -44,18 +44,15 @@ function onClick() {
     DeviceOrientationEvent.requestPermission().then(function (permissionState) {
       if (permissionState === "granted") {
         window.addEventListener("deviceorientation", function (e) {
-          // document.body.style.background = "pink"
+          document.body.style.background = "pink";
           button.style.display = "none";
           element.appendChild(renderer.domElement);
 
           function render() {
-            requestAnimationFrame(render); // cube.rotation.y += e.alpha / 200
-            // cube.rotation.y = -e.gamma
-            // cube.rotation.z = e.alpha / 50
-
+            requestAnimationFrame(render);
             cube.rotation.x = e.beta / 30;
             cube.rotation.y = -e.gamma / 30;
-            cube.rotation.z = -(e.alpha - 180) / 30;
+            cube.rotation.z = -(e.alpha - 180);
             renderer.render(scene, camera);
           }
 
@@ -75,7 +72,7 @@ function onClick() {
   } else {
     var render = function render() {
       requestAnimationFrame(render);
-      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
       renderer.render(scene, camera);
     };
 
