@@ -1,0 +1,6 @@
+# 管理外ファイル
+*.log
+*.DS_Store
+*.sass-cache
+*.vscode/settings.json
+node_modules/

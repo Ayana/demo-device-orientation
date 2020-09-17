@@ -1,0 +1,198 @@
+/*-----------------------------------------------
+//  Project Default Styles
+//  
+//  Table of Contents:
+//	1.Import
+//	2.Typography
+//	3.Base 
+//	4.Modules
+-----------------------------------------------*/
+
+/* --------------------------------------------
+1.Import 
+-------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Lato:100,400|EB+Garamond:400,500|Noto+Serif+JP|Noto+Sans+JP&display=swap');
+
+/* --------------------------------------------
+2.Typography
+-------------------------------------------- */
+.font-serif {
+	font-family: $font-serif;
+}
+
+/* --------------------------------------------
+3.Base
+-------------------------------------------- */
+html {
+	font-size: 16px;
+	width: 100%;
+	-webkit-print-color-adjust: exact; /* For print */
+	body {
+		background-color: $color-bg;
+		color: $color-font;
+		// font-size: 1.5rem; Change values depending on your projects
+		font-family: $font-sans-serif;
+		font-weight: 400;
+		letter-spacing: 0.02em;
+		line-height: 1.5;
+		@include medium {
+			// font-size: 2rem; Change values depending on your projects
+		}
+		::selection {
+			background: initial;
+		}
+		a,
+		button {
+			color: $color-font;
+			cursor: pointer;
+			text-decoration: none;
+			transition: all 0.3s;
+		}
+		img {
+			width: 100%;
+		}
+		@include medium {
+			@media (hover: hover) and (pointer: fine) {
+				a:hover,
+				a img:hover,
+				button:hover {
+					opacity: 0.7;
+				}
+				.nohover:hover,
+				.nohover img:hover {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+
+/* --------------------------------------------
+4.Modules
+-------------------------------------------- */
+// Simple underline
+// .link-ul {
+// 	text-decoration: underline;
+// 	@media (hover: hover) and (pointer: fine) {
+// 		&:hover {
+// 			text-decoration: none;
+// 		}
+// 	}
+// }
+
+// Transform underline
+.link-ul {
+	position: relative;
+	&:after {
+		position: absolute;
+		bottom: -4px;
+		left: 0px;
+		content: '';
+		width: 100%;
+		height: 1px;
+		background: $color-gray;
+	}
+	@media (hover: hover) and (pointer: fine) {
+		&:after {
+			transform: scale(0, 1);
+			transform-origin: right;
+			transition: transform 0.4s cubic-bezier(0.2, 0.3, 0, 1) 0s;
+		}
+		&:hover {
+			&:after {
+				transform: none;
+				transform-origin: left;
+			}
+		}
+	}
+}
+.link-op {
+	@media (hover: hover) and (pointer: fine) {
+		transition: 0.3s;
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+}
+.link-color {
+	color: $color-link;
+}
+
+// Container
+.container {
+	padding: 0 1.5rem;
+	&.sp-full {
+		padding: 0;
+	}
+	@include medium {
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 0 6rem;
+	}
+	@include medium-only {
+		padding: 0 3rem;
+	}
+}
+.container-narrow {
+	padding: 0 1.5rem;
+	@include medium {
+		max-width: 780px;
+		margin: 0 auto;
+		padding: 0 6rem;
+	}
+	@include medium-only {
+		padding: 0 3rem;
+	}
+}
+.container-wide {
+	padding: 0 1.5rem;
+	@include medium {
+		padding: 0 6rem;
+	}
+	@include medium-only {
+		padding: 0 3rem;
+	}
+}
+
+// Visibility
+.for-small {
+	@include medium {
+		display: none;
+	}
+}
+.for-medium {
+	display: none;
+	@include medium {
+		display: inline-block;
+	}
+}
+.for-medium-only {
+	display: none;
+	@include medium-only {
+		display: inline-block;
+	}
+}
+.for-large {
+	display: none;
+	@include large {
+		display: inline-block;
+	}
+}
+// Body Scroll Lock
+body.lock {
+	overflow: hidden;
+}
+
+.heading {
+	margin-bottom: 2rem;
+	@include medium {
+		margin-bottom: 4rem;
+	}
+	.heading__title {
+		font-size: 2rem;
+		font-weight: 400;
+		@include medium {
+			font-size: 2.6rem;
+		}
+	}
+}
