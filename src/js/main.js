@@ -77,6 +77,6 @@ function onClick() {
       .catch(console.error)
   } else {
     // handle regular non iOS 13+ devices
-    document.body.style.background = "red"
+    document.body.style.background = "blue"
   }
 }
