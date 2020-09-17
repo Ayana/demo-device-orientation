@@ -17,13 +17,15 @@ scene.add(cube);
 cube.position.z = -5;
 cube.rotation.x = 10;
 cube.rotation.y = 5;
-renderer.render(scene, camera); // const animate = function () {
-//   cube.rotation.x += 0.01
-//   renderer.render(scene, camera)
-//   requestAnimationFrame(animate)
-// }
-// animate()
+renderer.render(scene, camera);
 
+var animate = function animate() {
+  cube.rotation.x += 0.01;
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+};
+
+animate();
 element.addEventListener("click", onClick);
 
 function onClick() {
@@ -32,16 +34,13 @@ function onClick() {
     DeviceOrientationEvent.requestPermission().then(function (permissionState) {
       if (permissionState === "granted") {
         window.addEventListener("deviceorientation", function (e) {
-          var animate = function animate() {
-            cube.rotation.x += e.beta;
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-          };
-
-          animate(); // element.style.transform =
-          //   "rotateZ(" + (e.alpha - 180) + "deg) " + 
-          //   "rotateX(" + e.beta + "deg) " +
-          //   "rotateY(" + -e.gamma + "deg)"
+          // const animate = function () {
+          //   cube.rotation.x += e.beta
+          //   renderer.render(scene, camera)
+          //   requestAnimationFrame(animate)
+          // }
+          // animate()
+          element.style.transform = "rotateZ(" + (e.alpha - 180) + "deg) " + "rotateX(" + e.beta + "deg) " + "rotateY(" + -e.gamma + "deg)";
         });
       }
     })["catch"](console.error);

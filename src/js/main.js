@@ -19,12 +19,12 @@ cube.rotation.x = 10
 cube.rotation.y = 5
 renderer.render(scene, camera)
 
-// const animate = function () {
-//   cube.rotation.x += 0.01
-//   renderer.render(scene, camera)
-//   requestAnimationFrame(animate)
-// }
-// animate()
+const animate = function () {
+  cube.rotation.x += 0.01
+  renderer.render(scene, camera)
+  requestAnimationFrame(animate)
+}
+animate()
 
 
 element.addEventListener("click", onClick)
@@ -36,17 +36,17 @@ function onClick() {
       .then((permissionState) => {
         if (permissionState === "granted") {
           window.addEventListener("deviceorientation", (e) => {
-            const animate = function () {
-              cube.rotation.x += e.beta
-              renderer.render(scene, camera)
-              requestAnimationFrame(animate)
-            }
-            animate()
+            // const animate = function () {
+            //   cube.rotation.x += e.beta
+            //   renderer.render(scene, camera)
+            //   requestAnimationFrame(animate)
+            // }
+            // animate()
             
-            // element.style.transform =
-            //   "rotateZ(" + (e.alpha - 180) + "deg) " + 
-            //   "rotateX(" + e.beta + "deg) " +
-            //   "rotateY(" + -e.gamma + "deg)"
+            element.style.transform =
+              "rotateZ(" + (e.alpha - 180) + "deg) " + 
+              "rotateX(" + e.beta + "deg) " +
+              "rotateY(" + -e.gamma + "deg)"
           })
         }
       })
