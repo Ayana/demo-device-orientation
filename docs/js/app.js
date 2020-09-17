@@ -48,7 +48,7 @@ function onClick() {
 
           function render() {
             requestAnimationFrame(render);
-            cube.rotation.y += e.beta;
+            cube.rotation.y += e.alpha - 180;
             renderer.render(scene, camera);
           }
 
@@ -73,7 +73,7 @@ function onClick() {
     };
 
     // handle regular non iOS 13+ devices
-    document.body.style.background = "purple";
+    document.body.style.background = "red";
     element.appendChild(renderer.domElement);
     render();
   }
