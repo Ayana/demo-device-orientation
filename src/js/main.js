@@ -55,7 +55,7 @@ function onClick() {
       .then((permissionState) => {
         if (permissionState === "granted") {
           window.addEventListener("deviceorientation", (e) => {
-            document.body.style.background = "pink"
+            // document.body.style.background = "pink"
             button.style.display = "none"
             element.appendChild(renderer.domElement)
 
