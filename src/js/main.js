@@ -37,15 +37,13 @@ pointLight.position.set(0, 300, 200)
 
 scene.add(pointLight)
 
-function render() {
-  requestAnimationFrame(render)
+// function render() {
+//   requestAnimationFrame(render)
 
-  cube.rotation.y += 0.01
+//   cube.rotation.y += 0.01
 
-  renderer.render(scene, camera)
-}
-
-render()
+//   renderer.render(scene, camera)
+// }
 
 const button = document.querySelector(".button")
 button.addEventListener("click", onClick)
@@ -59,23 +57,41 @@ function onClick() {
           window.addEventListener("deviceorientation", (e) => {
             element.appendChild(renderer.domElement)
 
-            element.style.transform =
-              "rotateZ(" +
-              (e.alpha - 180) +
-              "deg) " +
-              "rotateX(" +
-              e.beta +
-              "deg) " +
-              "rotateY(" +
-              -e.gamma +
-              "deg)"
+            function render() {
+              requestAnimationFrame(render)
+
+              cube.rotation.y += e.beta
+
+              renderer.render(scene, camera)
+            }
+            render()
+
+            // element.style.transform =
+            //   "rotateZ(" +
+            //   (e.alpha - 180) +
+            //   "deg) " +
+            //   "rotateX(" +
+            //   e.beta +
+            //   "deg) " +
+            //   "rotateY(" +
+            //   -e.gamma +
+            //   "deg)"
           })
         }
       })
       .catch(console.error)
   } else {
     // handle regular non iOS 13+ devices
-    document.body.style.background = "orange"
+    document.body.style.background = "purple"
     element.appendChild(renderer.domElement)
+
+    function render() {
+      requestAnimationFrame(render)
+
+      cube.rotation.y += 0.01
+
+      renderer.render(scene, camera)
+    }
+    render()
   }
 }

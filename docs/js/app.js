@@ -29,15 +29,12 @@ var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
 scene.add(skybox);
 var pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(0, 300, 200);
-scene.add(pointLight);
+scene.add(pointLight); // function render() {
+//   requestAnimationFrame(render)
+//   cube.rotation.y += 0.01
+//   renderer.render(scene, camera)
+// }
 
-function render() {
-  requestAnimationFrame(render);
-  cube.rotation.y += 0.01;
-  renderer.render(scene, camera);
-}
-
-render();
 var button = document.querySelector(".button");
 button.addEventListener("click", onClick);
 
@@ -48,13 +45,36 @@ function onClick() {
       if (permissionState === "granted") {
         window.addEventListener("deviceorientation", function (e) {
           element.appendChild(renderer.domElement);
-          element.style.transform = "rotateZ(" + (e.alpha - 180) + "deg) " + "rotateX(" + e.beta + "deg) " + "rotateY(" + -e.gamma + "deg)";
+
+          function render() {
+            requestAnimationFrame(render);
+            cube.rotation.y += e.beta;
+            renderer.render(scene, camera);
+          }
+
+          render(); // element.style.transform =
+          //   "rotateZ(" +
+          //   (e.alpha - 180) +
+          //   "deg) " +
+          //   "rotateX(" +
+          //   e.beta +
+          //   "deg) " +
+          //   "rotateY(" +
+          //   -e.gamma +
+          //   "deg)"
         });
       }
     })["catch"](console.error);
   } else {
+    var render = function render() {
+      requestAnimationFrame(render);
+      cube.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    };
+
     // handle regular non iOS 13+ devices
-    document.body.style.background = "orange";
+    document.body.style.background = "purple";
     element.appendChild(renderer.domElement);
+    render();
   }
 }
