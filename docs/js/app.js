@@ -47,18 +47,10 @@ function onClick() {
     DeviceOrientationEvent.requestPermission().then(function (permissionState) {
       if (permissionState === "granted") {
         window.addEventListener("deviceorientation", function (e) {
-          requestAnimationFrame(render);
-          cube.rotation.y += e.beta;
-          renderer.render(scene, camera); // element.style.transform =
-          //   "rotateZ(" +
-          //   (e.alpha - 180) +
-          //   "deg) " +
-          //   "rotateX(" +
-          //   e.beta +
-          //   "deg) " +
-          //   "rotateY(" +
-          //   -e.gamma +
-          //   "deg)"
+          // requestAnimationFrame(render)
+          // cube.rotation.y += e.beta
+          // renderer.render(scene, camera)
+          element.style.transform = "rotateZ(" + (e.alpha - 180) + "deg) " + "rotateX(" + e.beta + "deg) " + "rotateY(" + -e.gamma + "deg)";
         });
       }
     })["catch"](console.error);

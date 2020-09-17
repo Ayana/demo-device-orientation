@@ -57,20 +57,20 @@ function onClick() {
       .then((permissionState) => {
         if (permissionState === "granted") {
           window.addEventListener("deviceorientation", (e) => {
-            requestAnimationFrame(render)
-            cube.rotation.y += e.beta
-            renderer.render(scene, camera)
+            // requestAnimationFrame(render)
+            // cube.rotation.y += e.beta
+            // renderer.render(scene, camera)
 
-            // element.style.transform =
-            //   "rotateZ(" +
-            //   (e.alpha - 180) +
-            //   "deg) " +
-            //   "rotateX(" +
-            //   e.beta +
-            //   "deg) " +
-            //   "rotateY(" +
-            //   -e.gamma +
-            //   "deg)"
+            element.style.transform =
+              "rotateZ(" +
+              (e.alpha - 180) +
+              "deg) " +
+              "rotateX(" +
+              e.beta +
+              "deg) " +
+              "rotateY(" +
+              -e.gamma +
+              "deg)"
           })
         }
       })
