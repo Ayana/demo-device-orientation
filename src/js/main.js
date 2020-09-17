@@ -46,6 +46,8 @@
 // }
 
 // render()
+const element = document.querySelector(".element")
+console.log(element)
 
 const button = document.querySelector(".button")
 button.addEventListener("click", onClick)
@@ -73,6 +75,6 @@ function onClick() {
       .catch(console.error)
   } else {
     // handle regular non iOS 13+ devices
-    document.body.style.background = "green"
+    document.body.style.background = "brown"
   }
 }
