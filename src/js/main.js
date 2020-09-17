@@ -96,9 +96,7 @@ function onClick() {
     function render() {
       requestAnimationFrame(render)
 
-      // cube.rotation.z += 0.01
       cube.rotation.y += 0.01
-      cube.rotation.x += 0.005
 
       renderer.render(scene, camera)
     }
