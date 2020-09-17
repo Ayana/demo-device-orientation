@@ -67,6 +67,7 @@ function onClick() {
               // cube.rotation.z = e.alpha / 50
               cube.rotation.x = e.beta / 30
               cube.rotation.y = -e.gamma / 30
+              cube.rotation.z = -(e.alpha - 180) / 30
 
               renderer.render(scene, camera)
             }
@@ -96,7 +97,7 @@ function onClick() {
     function render() {
       requestAnimationFrame(render)
 
-      cube.rotation.y += 0.01
+      cube.rotation.x += 0.01
 
       renderer.render(scene, camera)
     }

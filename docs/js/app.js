@@ -55,6 +55,7 @@ function onClick() {
 
             cube.rotation.x = e.beta / 30;
             cube.rotation.y = -e.gamma / 30;
+            cube.rotation.z = -(e.alpha - 180) / 30;
             renderer.render(scene, camera);
           }
 
@@ -74,7 +75,7 @@ function onClick() {
   } else {
     var render = function render() {
       requestAnimationFrame(render);
-      cube.rotation.y += 0.01;
+      cube.rotation.x += 0.01;
       renderer.render(scene, camera);
     };
 
