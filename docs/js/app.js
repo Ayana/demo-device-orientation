@@ -52,7 +52,7 @@ function onClick() {
             requestAnimationFrame(render);
             cube.rotation.x = e.beta / 30;
             cube.rotation.y = -e.gamma / 30;
-            cube.rotation.z = -(e.alpha - 180);
+            cube.rotation.z = -((e.alpha - 180) / 2);
             renderer.render(scene, camera);
           }
 
