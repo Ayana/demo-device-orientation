@@ -1,32 +1,45 @@
 "use strict";
 
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight);
+var width = window.innerWidth;
+var height = window.innerHeight;
 var renderer = new THREE.WebGLRenderer({
   antialias: true
 });
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(width, height);
 var element = document.querySelector(".element");
 element.appendChild(renderer.domElement);
-var geometry = new THREE.BoxGeometry(1, 1, 1);
-var material = new THREE.MeshBasicMaterial({
-  color: 0xff0000
+var scene = new THREE.Scene();
+var cubeGeometry = new THREE.CubeGeometry(100, 100, 100);
+var cubeMaterial = new THREE.MeshLambertMaterial({
+  color: 0xffffff
 });
-var cube = new THREE.Mesh(geometry, material);
+var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+cube.rotation.y = Math.PI * 45 / 180;
 scene.add(cube);
-cube.position.z = -5;
-cube.rotation.x = 10;
-cube.rotation.y = 5;
-renderer.render(scene, camera);
+var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+camera.position.y = 160;
+camera.position.z = 400;
+camera.lookAt(cube.position);
+scene.add(camera);
+var skyboxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
+var skyboxMaterial = new THREE.MeshBasicMaterial({
+  color: 0x000000,
+  side: THREE.BackSide
+});
+var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
+scene.add(skybox);
+var pointLight = new THREE.PointLight(0xffffff);
+pointLight.position.set(0, 300, 200);
+scene.add(pointLight); // var clock = new THREE.Clock()
+// function render() {
+//   requestAnimationFrame(render)
+//   cube.rotation.y += number
+//   renderer.render(scene, camera)
+// }
+// render()
 
-var animate = function animate() {
-  cube.rotation.x += 0.01;
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-};
-
-animate();
-element.addEventListener("click", onClick);
+var button = document.querySelector(".button");
+button.addEventListener("click", onClick);
 
 function onClick() {
   // feature detect
@@ -34,13 +47,18 @@ function onClick() {
     DeviceOrientationEvent.requestPermission().then(function (permissionState) {
       if (permissionState === "granted") {
         window.addEventListener("deviceorientation", function (e) {
-          // const animate = function () {
-          //   cube.rotation.x += e.beta
-          //   renderer.render(scene, camera)
-          //   requestAnimationFrame(animate)
-          // }
-          // animate()
-          element.style.transform = "rotateZ(" + (e.alpha - 180) + "deg) " + "rotateX(" + e.beta + "deg) " + "rotateY(" + -e.gamma + "deg)";
+          requestAnimationFrame(render);
+          cube.rotation.y += e.beta;
+          renderer.render(scene, camera); // element.style.transform =
+          //   "rotateZ(" +
+          //   (e.alpha - 180) +
+          //   "deg) " +
+          //   "rotateX(" +
+          //   e.beta +
+          //   "deg) " +
+          //   "rotateY(" +
+          //   -e.gamma +
+          //   "deg)"
         });
       }
     })["catch"](console.error);
