@@ -55,7 +55,8 @@ function onClick() {
       .then((permissionState) => {
         if (permissionState === "granted") {
           window.addEventListener("deviceorientation", (e) => {
-            document.body.style.background = "pink"
+            // document.body.style.background = "pink"
+            button.style.display = "none"
             element.appendChild(renderer.domElement)
 
             function render() {
@@ -63,9 +64,9 @@ function onClick() {
 
               // cube.rotation.y += e.alpha / 200
               // cube.rotation.y = -e.gamma
-              cube.rotation.z = e.alpha / 100
-              cube.rotation.x = e.beta / 100
-              cube.rotation.y = e.gamma / 100
+              // cube.rotation.z = e.alpha / 50
+              cube.rotation.x = e.beta / 50
+              cube.rotation.y = e.gamma / 50
 
               renderer.render(scene, camera)
             }
@@ -87,15 +88,17 @@ function onClick() {
       .catch(console.error)
   } else {
     // handle regular non iOS 13+ devices
-    document.body.style.background = "pink"
+    // document.body.style.background = "pink"
+    button.style.display = "none"
     element.appendChild(renderer.domElement)
+    button.style.display = "none"
 
     function render() {
       requestAnimationFrame(render)
 
-      cube.rotation.z += 0.01
+      // cube.rotation.z += 0.01
       cube.rotation.y += 0.01
-      cube.rotation.x += 0.01
+      cube.rotation.x += 0.005
 
       renderer.render(scene, camera)
     }
