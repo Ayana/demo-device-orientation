@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  @@include('./inc/head.html')
+  <body>
+    @@include('./inc/header.html')
+
+    <style>
+      .button {
+        width: 50%;
+        margin: auto;
+        display: block;
+        padding: 5px;
+        background: #eee;
+        border-radius: 4px;
+        margin-top: 10px;
+      }
+    </style>
+
+    <main>
+      <!-- <button class="button">CLICK</button> -->
+      <div class="element"></div>
+    </main>
+    @@include('./inc/footer.html')
+    <script src="https://unpkg.com/three@0.120.1/build/three.js"></script>
+    <script>
+      let scene, camera, renderer, plane
+
+      function init() {
+        scene = new THREE.Scene()
+
+        // Camera setting
+        const fov = 30
+        const aspect = 2
+        const near = 0.1
+        const far = 500
+        camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
+        camera.position.set(0, 20, 0) // x, y, z
+        camera.lookAt(0, 0, 0)
+
+        // Render
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+        renderer.setSize(window.innerWidth, window.innerHeight)
+        document.querySelector(".element").appendChild(renderer.domElement)
+
+        // Add plane
+        plane = new THREE.Mesh(
+          new THREE.PlaneGeometry(15, 8),
+          new THREE.MeshBasicMaterial({
+            color: 0x0000ff,
+          })
+        )
+        plane.rotation.set(-Math.PI / 2, 0, 0)
+        scene.add(plane)
+
+        window.addEventListener("resize", onWindowResize)
+      }
+
+      // WindowResizeOptimization
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight
+        camera.updateProjectionMatrix()
+        renderer.setSize(window.innerWidth, window.innerHeight)
+        render()
+      }
+
+      // Render
+      function render() {
+        renderer.render(scene, camera)
+      }
+
+      init()
+      render()
+    </script>
+  </body>
+</html>

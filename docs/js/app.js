@@ -7,6 +7,8 @@ var renderer = new THREE.WebGLRenderer({
   antialias: true
 });
 renderer.setSize(width, height);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 var scene = new THREE.Scene();
 var cubeGeometry = new THREE.CubeGeometry(100, 100, 100);
 var cubeMaterial = new THREE.MeshLambertMaterial({
@@ -15,26 +17,35 @@ var cubeMaterial = new THREE.MeshLambertMaterial({
 var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 cube.rotation.y = Math.PI * 45 / 180;
 scene.add(cube);
-var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
-camera.position.y = 160;
-camera.position.z = 400;
-camera.lookAt(cube.position);
-scene.add(camera);
-var skyboxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
-var skyboxMaterial = new THREE.MeshBasicMaterial({
-  color: 0x000000,
-  side: THREE.BackSide
+var geometry = new THREE.PlaneGeometry(10000, 10000, 100, 100);
+var material = new THREE.MeshBasicMaterial({
+  color: 0xffffff // side: THREE.DoubleSide,
+
 });
-var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
-scene.add(skybox);
+var meshFloor = new THREE.Mesh(geometry, material);
+meshFloor.rotation.x = -90 * Math.PI / 180;
+meshFloor.position.y = -100;
+meshFloor.receiveShadow = true;
+scene.add(meshFloor);
+var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+camera.position.y = 280;
+camera.position.z = 600;
+camera.lookAt(cube.position);
+scene.add(camera); // const skyboxGeometry = new THREE.CubeGeometry(10000, 10000, 10000)
+// const skyboxMaterial = new THREE.MeshBasicMaterial({
+//   // color: 0x000000,
+//   // side: THREE.BackSide,
+// })
+// const skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial)
+// scene.add(skybox)
+// Add light
+
 var pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(0, 300, 200);
-scene.add(pointLight); // function render() {
-//   requestAnimationFrame(render)
-//   cube.rotation.y += 0.01
-//   renderer.render(scene, camera)
-// }
-
+pointLight.castShadow = true;
+scene.add(pointLight);
+var ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+scene.add(ambientLight);
 var button = document.querySelector(".button");
 button.addEventListener("click", onClick);
 
@@ -51,8 +62,7 @@ function onClick() {
           function render() {
             requestAnimationFrame(render);
             cube.rotation.x = e.beta / 30;
-            cube.rotation.y = -e.gamma / 30; // cube.rotation.z = -((e.alpha - 180) / 2)
-
+            cube.rotation.y = -e.gamma / 30;
             cube.rotation.z = -((e.alpha - 180) / 30);
             renderer.render(scene, camera);
           }

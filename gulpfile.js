@@ -31,7 +31,7 @@ function cssTask() {
 
 // HTML task
 function htmlTask() {
-  return src("./src/index.html").pipe(dest("./docs/"))
+  return src("./src/*.html").pipe(dest("./docs/"))
   // .pipe(browserSync.stream())
 }
 
@@ -67,7 +67,7 @@ function imageTask() {
 
 // File include task
 function fileincludeTask() {
-  return src(["./src/index.html"])
+  return src(["./src/*.html"])
     .pipe(
       fileinclude({
         prefix: "@@",
@@ -87,10 +87,7 @@ function watchTask() {
   watch("./src/images/**/*", imageTask)
   watch("./src/scss/**/*.scss", cssTask)
   watch("./src/js/*.js", jsTask)
-  watch("./src/**/*.html", fileincludeTask, htmlTask).on(
-    "change",
-    browserSync.reload
-  )
+  watch("./src/**/*.html", series(htmlTask, fileincludeTask)).on("change", browserSync.reload)
   // watch('./dist/*.html').on('change', browserSync.reload)
   // watch('./dest/js/*.js').on('change', reloadBrowser); //Use when change js files directly
 }
@@ -105,10 +102,4 @@ exports.watch = watchTask
 exports.clean = cleanTask
 
 // Default task
-exports.default = series(
-  cleanTask,
-  parallel(imageTask, cssTask, jsTask),
-  htmlTask,
-  fileincludeTask,
-  watchTask
-)
+exports.default = series(cleanTask, parallel(imageTask, cssTask, jsTask), htmlTask, fileincludeTask, watchTask)
