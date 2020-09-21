@@ -35,6 +35,12 @@ function htmlTask() {
   // .pipe(browserSync.stream())
 }
 
+// Vendor task
+function vendorTask() {
+  return src("./src/vendor/*").pipe(dest("./docs/vendor/"))
+  // .pipe(browserSync.stream())
+}
+
 // JS Babel & minify task
 function jsTask() {
   return (
@@ -87,6 +93,7 @@ function watchTask() {
   watch("./src/images/**/*", imageTask)
   watch("./src/scss/**/*.scss", cssTask)
   watch("./src/js/*.js", jsTask)
+  watch("./src/vendor/*", vendorTask)
   watch("./src/**/*.html", series(htmlTask, fileincludeTask)).on("change", browserSync.reload)
   // watch('./dist/*.html').on('change', browserSync.reload)
   // watch('./dest/js/*.js').on('change', reloadBrowser); //Use when change js files directly
@@ -102,4 +109,10 @@ exports.watch = watchTask
 exports.clean = cleanTask
 
 // Default task
-exports.default = series(cleanTask, parallel(imageTask, cssTask, jsTask), htmlTask, fileincludeTask, watchTask)
+exports.default = series(
+  cleanTask,
+  parallel(imageTask, vendorTask, cssTask, jsTask),
+  htmlTask,
+  fileincludeTask,
+  watchTask
+)
