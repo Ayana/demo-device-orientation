@@ -60,10 +60,10 @@ function imageTask() {
     .pipe(
       imagemin([
         pngquant({
-          quality: [0.3, 0.5], // [minimum, maximum]
+          quality: [0.9, 1.0], // [minimum, maximum]
         }),
         mozjpeg({
-          quality: 40,
+          quality: 100,
         }),
       ])
     )
