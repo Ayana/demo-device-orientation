@@ -56,7 +56,7 @@ function jsTask() {
 
 // Image minify task
 function imageTask() {
-  return src("./src/images/*")
+  return src("./src/images/**/*")
     .pipe(
       imagemin([
         pngquant({
