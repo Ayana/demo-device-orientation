@@ -29,10 +29,10 @@
       .parallax-front {
         background: url(./images/img_parallax.png);
         position: absolute;
-        background-size: contain;
+        background-size: cover;
         z-index: 1;
-        width: 500px;
-        height: 500px;
+        width: 50%;
+        height: 50%;
         margin: auto;
         top: 0;
         left: 0;
@@ -61,19 +61,11 @@
           DeviceOrientationEvent.requestPermission()
             .then((permissionState) => {
               if (permissionState === "granted") {
+                button.style.display = "none"
                 window.addEventListener("deviceorientation", (e) => {
-                  button.style.display = "none"
-
-                  front.style.transform =
-                    "translateZ(" +
-                    (e.alpha - 180) +
-                    "deg) " +
-                    "translateX(" +
-                    e.beta +
-                    "deg) " +
-                    "translateY(" +
-                    -e.gamma +
-                    "deg)"
+                  const x = e.gamma * 0.1
+                  const y = e.beta * 0.1
+                  front.style.transform = `translate3d(${-x}px,${-y}px,${x + y}px`
                 })
               }
             })
