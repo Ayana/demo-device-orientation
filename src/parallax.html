@@ -29,7 +29,8 @@
       .parallax-front {
         background: url(./images/img_parallax.png);
         position: absolute;
-        background-size: cover;
+        background-size: 100%;
+        background-repeat: no-repeat;
         z-index: 1;
         width: 50%;
         height: 50%;
@@ -43,6 +44,7 @@
 
     <main>
       <button class="button">CLICK</button>
+      <div class="note"></div>
       <div class="parallax-container">
         <div class="parallax-back"></div>
         <div class="parallax-front"></div>
@@ -53,6 +55,7 @@
       const button = document.querySelector(".button")
       const container = document.querySelector(".parallax-container")
       const front = document.querySelector(".parallax-front")
+      const note = document.querySelector(".note")
       button.addEventListener("click", onClick)
 
       function onClick() {
@@ -63,6 +66,7 @@
               if (permissionState === "granted") {
                 button.style.display = "none"
                 window.addEventListener("deviceorientation", (e) => {
+                  note.innerHTML = e.gamma
                   const x = e.gamma * 0.1
                   const y = e.beta * 0.1
                   front.style.transform = `translate3d(${-x}px,${-y}px,${x + y}px`
