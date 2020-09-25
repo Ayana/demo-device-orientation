@@ -66,9 +66,10 @@
               if (permissionState === "granted") {
                 button.style.display = "none"
                 window.addEventListener("deviceorientation", (e) => {
-                  note.innerHTML = e.gamma
                   const x = e.gamma * 0.1
                   const y = e.beta * 0.1
+                  note.innerHTML = x
+                  // front.style.transform = `translate3d(${-x}px,${-y}px,${x + y}px`
                   front.style.transform = `translate3d(${-x}px,${-y}px,${x + y}px`
                 })
               }
