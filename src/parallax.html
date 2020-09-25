@@ -55,7 +55,6 @@
       const button = document.querySelector(".button")
       const container = document.querySelector(".parallax-container")
       const front = document.querySelector(".parallax-front")
-      const note = document.querySelector(".note")
       button.addEventListener("click", onClick)
 
       function onClick() {
@@ -68,11 +67,7 @@
                 window.addEventListener("deviceorientation", (e) => {
                   const x = e.gamma
                   const y = e.beta
-                  note.innerHTML = y
                   front.style.transform = `translate3d(${-x}px,${-y}px,${x + y}px`
-
-                  // front.style.transform =
-                  //   "translateZ(" + e.alpha + "px) " + "translateX(" + x + "px) " + "translateY(" + y + "px)"
                 })
               }
             })
