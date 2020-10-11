@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  @@include('./inc/head.html')
+  <body>
+    @@include('./inc/header.html')
+
+    <!-- 
+      Create box parallax
+      1: AFrame & Object model display
+      2: Webcam & Tensorflow test <--here
+      3: Create logic for parallax
+     -->
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <!-- WebcamJS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
+      integrity="sha512-dQIiHSl2hr3NWKKLycPndtpbh5iaHLo6MwrXm7F0FM5e+kL2U16oE9uIwPHUl6fQBeCthiEuV/rzP3MiAB8Vfw=="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Tensorflow -->
+    <script src="https://unpkg.com/@tensorflow/tfjs-core@2.1.0/dist/tf-core.js"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0/dist/tf-converter.js"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>
+
+    <main>
+      <video class="container"></video>
+      <!-- <a-scene>
+        <a-entity
+          geometry="primitive: box; width: 1; height: 1; depth: 1"
+          position="0 0 -1"
+          material="color: #0000FF; opacity: 1; wireframe: true;"
+          rotation="0 0 0"
+        >
+        </a-entity>
+        <a-camera position="0 0 0"></a-camera>
+      </a-scene> -->
+    </main>
+
+    <script>
+      async function main() {
+        // Load the MediaPipe facemesh model.
+        const model = await facemesh.load()
+
+        // Pass in a video stream (or an image, canvas, or 3D tensor) to obtain an
+        // array of detected faces from the MediaPipe graph.
+        const predictions = await model.estimateFaces(document.querySelector("video"))
+
+        if (predictions.length > 0) {
+          for (let i = 0; i < predictions.length; i++) {
+            const keypoints = predictions[i].scaledMesh
+
+            // Log facial keypoints.
+            for (let i = 0; i < keypoints.length; i++) {
+              const [x, y, z] = keypoints[i]
+
+              console.log(`Keypoint ${i}: [${x}, ${y}, ${z}]`)
+            }
+          }
+        }
+      }
+
+      main()
+    </script>
+  </body>
+</html>
