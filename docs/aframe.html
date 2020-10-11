@@ -35,13 +35,37 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 
     <main>
+      <div class="container"></div>
       <a-scene>
-        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-        <a-sky color="#ECECEC"></a-sky>
+        <a-entity
+          geometry="primitive: box; width: 1; height: 1; depth: 1"
+          position="0 0 -1"
+          material="color: #0000FF; opacity: 1; wireframe: true;"
+          rotation="0 0 0"
+        >
+        </a-entity>
+        <a-camera position="0 0 0"></a-camera>
       </a-scene>
+      <!-- <a-scene>
+        <a-box position="0 0 -1" rotation="0 0 0" color="#4CC3D9" depth="1"></a-box>
+        <a-box src="#texture"></a-box>
+        <a-camera position="0 0 0"></a-camera>
+      </a-scene> -->
     </main>
+
+    <script>
+      // const container = document.querySelector(".container")
+      // if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      //   DeviceOrientationEvent.requestPermission()
+      //     .then((permissionState) => {
+      //       if (permissionState === "granted") {
+      //         container.style.display = "block"
+      //       }
+      //     })
+      //     .catch(console.error)
+      // } else {
+      //   container.style.display = "block"
+      // }
+    </script>
   </body>
 </html>
