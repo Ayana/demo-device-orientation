@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>TITLE</title>
+	<meta name="description" content="DESCRIPTION" />
+	<meta name="keywords" content="KEYWORD" />
+
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+	<link rel="stylesheet" href="css/app.css" />
+	<style>
+		.container {
+			max-width: 800px;
+			margin: auto;
+			padding: 2rem;
+		}
+
+		textarea {
+			display: block;
+			width: 100%;
+			height: 400px;
+			overflow: hidden;
+		}
+	</style>
+	<script type="text/javascript" src="https://unpkg.com/mediainfo.js/dist/mediainfo.min.js"></script>
+
+</head>
+
+
+<body>
+
+	<main>
+
+		<div class="container">
+			<input type="file" id="fileinput" name="fileinput" />
+			<textarea id="output"></textarea>
+		</div>
+
+	</main>
+
+	<script>
+		const fileinput = document.getElementById('fileinput')
+		const output = document.getElementById('output')
+
+		const onChangeFile = (mediainfo) => {
+			const file = fileinput.files[0]
+			if (file) {
+				output.value = 'Working…'
+
+				const getSize = () => file.size
+
+				const readChunk = (chunkSize, offset) =>
+					new Promise((resolve, reject) => {
+						const reader = new FileReader()
+						reader.onload = (event) => {
+							if (event.target.error) {
+								reject(event.target.error)
+							}
+							resolve(new Uint8Array(event.target.result))
+						}
+						reader.readAsArrayBuffer(file.slice(offset, offset + chunkSize))
+					})
+
+				mediainfo
+					.analyzeData(getSize, readChunk)
+					.then((result) => {
+						output.value = result
+					})
+					.catch((error) => {
+						output.value = `An error occured:\n${error.stack}`
+					})
+			}
+		}
+
+		MediaInfo({ format: 'text' }, (mediainfo) => {
+			fileinput.addEventListener('change', () => onChangeFile(mediainfo))
+		})
+
+	</script>
+</body>
+
+</html>
