@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<style>
+		body {}
+
+		.mv {
+			width: 70%;
+			margin: auto;
+			height: 100vh;
+			padding: 20px;
+			position: relative;
+		}
+
+		.mv .box {
+			position: absolute;
+			z-index: -100;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.mv .on {
+			z-index: -80;
+		}
+
+		.box {
+			display: block;
+			height: 600px;
+			background-size: cover;
+		}
+
+		.bg1 {
+			background-image: url(../images/animation/img_gallery_01.jpg);
+		}
+
+		.bg2 {
+			background-image: url(../images/animation/img_gallery_02.jpg);
+		}
+
+		.bg3 {
+			background-image: url(../images/animation/img_gallery_03.jpg);
+		}
+
+		.orange {
+			background-color: orange;
+		}
+
+		.grey {
+			background-color: grey;
+		}
+
+		.green {
+			background-color: green;
+		}
+
+		#instafeed {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+		}
+
+		#instafeed a {
+			width: 100px;
+		}
+
+		#instafeed a img {
+			width: 100px;
+		}
+	</style>
+</head>
+
+
+<body>
+	<div class="mv">
+		<div class="box bg1"></div>
+		<div class="box bg2"></div>
+		<div class="box bg3"></div>
+	</div>
+
+	<div id="instafeed"></div>
+
+	<p>
+		アクセストークン
+	</p>
+	<p>https://www.youtube.com/watch?v=X2ndbJAnQKM</p>
+	<p>https://instafeedjs.com/#/</p>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+<script>
+
+	const tl = gsap.timeline()
+
+	// gsap.to("h2.title", { duration: 1, opacity: 0.3 });
+	tl.to(".bg1", {
+		delay: -0.5,
+		css: { className: 'box bg1 on' }
+	}).to(".bg1", {
+		delay: -0.5,
+		duration: 4,
+		x: 100,
+	}).to(".bg1", {
+		css: { className: 'box bg1' }
+	}).to(".bg2", {
+		delay: -0.5,
+		css: {
+			className: 'box bg2 on'
+		}
+	}).to(".bg2", {
+		delay: -0.5,
+		duration: 4,
+		scale: 1.2,
+		x: 50,
+	}).to(".bg2", {
+		css: { className: 'box bg2' }
+	}).repeat(3)
+	// gsap.to(".bg2", { css: { className: 'box bg2 on' }, duration: 2, x: 300 });
+	// gsap.to(".bg1", { css: { className: '+=on' }, duration: 2, x: 300 });
+	// gsap.to(".bg1", { duration: 2, x: 300 }).repeat(-1);  //Infinate repeat
+	// gsap.to(".green", { duration: 3, rotation: 360, scale: 0.5 });
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js"></script>
+
+
+<script>
+	const InstagramToken = 'IGQVJYWmM3UUI0UU1CSWtJSTBQZAXp0UW1iSWZA3TlBsMy1KYWZASdWpFTXZAUQVFLRmFHU3N6OE1ISEllcWhnOFAzRUlxOTF1b2NXZAU43YVZA1RFl1SzQ5NFVQM0psTUloQXhqNVVFRHhR';
+
+	var feed = new Instafeed({
+		accessToken: InstagramToken,
+		transform: function (item) {
+			var d = new Date(item.timestamp);
+			item.date = [d.getDate(), d.getMonth(), d.getYear()].join('/');
+			return item;
+		}
+	});
+
+	feed.run();
+</script>
+
+
+</html>
